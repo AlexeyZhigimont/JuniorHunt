@@ -1,0 +1,29 @@
+# folders #
+target/
+.idea
+.mvn
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# files #
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+*.cmd
+*.iws
+*.iml
+*.ipr
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+mvnw
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
