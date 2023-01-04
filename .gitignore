@@ -25,5 +25,8 @@ mvnw
 # Compiled class file
 *.class
 
+# Properties file
+/src/main/resources/application.properties
+
 # Log file
 *.log
