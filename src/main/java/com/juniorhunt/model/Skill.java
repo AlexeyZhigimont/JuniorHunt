@@ -1,15 +1,13 @@
 package com.juniorhunt.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @Entity
 @Table
 public class Skill {
@@ -21,4 +19,12 @@ public class Skill {
     @Enumerated(EnumType.STRING)
     private TypeSkill typeSkill;
 
+    public Skill(String skill, TypeSkill typeSkill) {
+        this.skill = skill;
+        this.typeSkill = typeSkill;
+    }
+
+    public Skill() {
+
+    }
 }

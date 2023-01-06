@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link
+            href="https://fonts.cdnfonts.com/css/gt-walsheim-pro"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/style.min.css"/>
+    <title>Личный кабинет</title>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header__inner">
+            <div class="header__logo">
+                <a class="logo__link" href="index.html">
+                    <img class="logo__img" src="../static/css/images/logo.svg"/>
+                </a>
+            </div>
+            <div class="header__search">
+                <form class="search-form" action="#">
+                    <img class="search-form__icon" src="../static/css/images/search.svg"/>
+                    <input
+                            class="search-form__input"
+                            placeholder="Поиск по ключевому слову"
+                            type="text"
+                    />
+                    <button class="search-form__btn">Искать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+<blockquote class="blockquote"></blockquote>
+<section class="tab">
+    <div class="container">
+        <div class="tabs">
+            <button class="tabs-link" onclick="openTab(event, 'main')" th:href="@{/}">
+                Главная
+            </button>
+            <button
+                    class="tabs-link active active"
+                    onclick="openTab(event, 'profile')"
+                    id="defaultOpen"
+            >
+                Мой профиль
+            </button>
+            <button class="tabs-link" onclick="openTab(event, 'reservations')">
+                <form th:action="@{/tool}">
+                    <input class="tabs-link" type="submit" value="Админка"/>
+                </form>
+            </button>
+            <button class="tabs-link" onclick="openTab(event, 'messages')">
+                <form th:action="@{/logout}" method="post">
+                    <input class="tabs-link" type="submit" value="Выход"/>
+                </form>
+
+            </button>
+        </div>
+        <div id="main" class="tab-content main"></div>
+        <div id="profile" class="tab-content profile">
+            <div class="profile__header">
+                <img
+                        class="profile__header-img"
+                        src="../static/css/images/account.png"
+                        alt="account"
+                />
+                <div class="profile__header-info">
+                    <h3 class="profile__header-text" th:text="${user?.firstName} +' '+ ${user?.lastName}"/>
+                    <table style="text-align: left">
+                        <tr>
+                            <th><p class="profile__main-name">Country</p></th>
+                            <th><p class="profile__main-name">Phone</p></th>
+                            <th><p class="profile__main-name">Email</p></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" style="border: 0" readonly name="country"
+                                       th:value="${user?.country?.getCountry()}" >
+                            </td>
+                            <td>
+                                <input type="text" style="border: 0" readonly name="country" th:value="${user.phone}">
+                            </td>
+                            <td>
+                                <input type="text" style="border: 0" readonly name="country" th:value="${user.email}">
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <div class="profile__header-info">
+
+                    <a th:href="'/junior/' + ${user.username}" class="profile__header-btn">Редактировать профиль</a>
+                </div>
+            </div>
+            <div class="profile__main">
+                <ul class="profile__main-list">
+                    <li class="profile__main-item">
+                        <p class="profile__main-name">Роль</p>
+                        <p class="profile__main-descr" th:text="${user?.position?.getPosition()}"></p>
+                    </li>
+                    <li class="profile__main-item">
+                        <p class="profile__main-name">Языки</p>
+                        <form method="post" action="/junior/lang">
+                            <div>
+                                <select class="profile__main-lang" name="language">
+                                    <option>
+                                        <p class="profile__main-lang" th:text="${user?.getLanguages()?.name()}"></p>
+                                    </option>
+                                    <option th:each="language : ${listLangs}">
+                                        <p th:text="${language.name}"/>
+                                    <option/>
+                                </select>
+                            </div>
+                            <input type="hidden" name="userId" th:value="${user.id}">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button class="profile__main-btn btn">Добавить</button>
+                        </form>
+                    </li>
+                    <li class="profile__main-item">
+                        <p class="profile__main-name">Способы связи со мной</p>
+                        <p class="profile__main-social">
+                            <img
+                                    class="profile__main-social__img"
+                                    src="../static/css/images/linkedin.svg"
+                                    alt="linkedin"
+                            />
+                        </p>
+                        <p class="profile__main-social">
+                            <img
+                                    class="profile__main-social__img"
+                                    src="../static/css/images/telegram.svg"
+                                    alt="telegram"
+                            />
+                        </p>
+                        <button class="profile__main-btn btn">Добавить</button>
+                    </li>
+                    <li class="profile__main-item">
+                        <p class="profile__main-name">Обо мне</p>
+                        <form method="post" action="/junior/aboutMe">
+                            <textarea class="profile__main-textarea" type="textarea" name="aboutMe"
+                                      th:text="${user.aboutMe}" placeholder="About me"></textarea>
+                            <input type="hidden" name="userId" th:value="${user.id}">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button class="profile__main-btn btn">Добавить</button>
+                        </form>
+                    </li>
+                    <li class="profile__main-item">
+                        <p class="profile__main-name">Скилы:</p>
+                        <div class="profile__main-box">
+                            <div class="profile__main-skillbox">
+                                <p class="profile__main-title">Hard skills</p>
+                                <div th:each="userHardSkill : ${userHardSkills}">
+                                    <p class="profile__main-skill" th:text="${userHardSkill}"></p>
+                                </div>
+                            </div>
+                            <div class="profile__main-skillbox">
+                                <form method="post">
+                                    <div th:each="hardSkill : ${hardSkills}">
+                                        <input class="profile__main-skill" type="checkbox" th:name="${hardSkill}"
+                                               th:text="${hardSkill}" th:checked/>
+                                    </div>
+                                    <input type="hidden" name="skill" value="HARD">
+                                    <input type="hidden" name="userId" th:value="${user.id}">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button class="profile__main-btn btn">Добавить</button>
+                                </form>
+                            </div>
+
+                            <div class="profile__main-skillbox">
+                                <p class="profile__main-title">Soft skills</p>
+                                <div th:each="userSoftSkill : ${userSoftSkills}">
+                                    <p class="profile__main-skill" th:text="${userSoftSkill}"></p>
+                                </div>
+                            </div>
+                            <div class="profile__main-skillbox">
+                                <form method="post">
+                                    <div th:each="softSkill : ${softSkills}">
+                                        <input class="profile__main-skill" type="checkbox" th:name="${softSkill}"
+                                               th:text="${softSkill}" th:checked/>
+                                    </div>
+                                    <input type="hidden" name="skill" value="SOFT">
+                                    <input type="hidden" name="userId" th:value="${user.id}">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button class="profile__main-btn btn">Добавить</button>
+                                </form>
+                            </div>
+
+                            <div class="profile__main-skillbox">
+                                <p class="profile__main-title">Tools</p>
+                                <div th:each="userToolSkill : ${userToolSkills}">
+                                    <p class="profile__main-skill" th:text="${userToolSkill}"></p>
+                                </div>
+                            </div>
+                            <div class="profile__main-skillbox">
+                                <form method="post">
+                                    <div th:each="toolSkill : ${toolSkills}">
+                                        <input class="profile__main-skill" type="checkbox" th:name="${toolSkill}"
+                                               th:text="${toolSkill}" th:checked/>
+                                    </div>
+                                    <input type="hidden" name="skill" value="TOOL">
+                                    <input type="hidden" name="userId" th:value="${user.id}">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button class="profile__main-btn btn">Добавить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="profile__main-work">
+                    <h4 class="profile__main-work__title">Work Experience</h4>
+                    <div class="profile__main-work__content">
+                        <div class="profile__main-work__content-left">
+                            <img
+                                    src="../static/css/images/workPic.png"
+                                    alt="workpic"
+                                    class="profile__main-work__content-img"
+                            />
+                            <div class="profile__main-work__content-box">
+                                <p class="profile__main-work__content-title">
+                                    IT Recruiter
+                                </p>
+                                <p class="profile__main-work__content-text">StarSoft</p>
+                                <img
+                                        class="profile__main-work__content-textImg"
+                                        alt="dot"
+                                        src="../static/css/images/dot.svg"
+                                />
+                                <p class="profile__main-work__content-text">Full-time</p>
+                            </div>
+                        </div>
+                        <div class="profile__main-work__content-right">
+                            <p class="profile__main-work__content-right__text">
+                                Dec 2020 — Present
+                            </p>
+                        </div>
+                    </div>
+                    <button class="profile__main-workbtn btn">Добавить</button>
+                </div>
+                <div class="profile__main-work">
+                    <h4 class="profile__main-work__title">Education</h4>
+                    <div class="profile__main-work__content">
+                        <div class="profile__main-work__content-left">
+                            <img
+                                    src="../static/css/images/workPic.png"
+                                    alt="workpic"
+                                    class="profile__main-work__content-img"
+                            />
+                            <div class="profile__main-work__content-box">
+                                <p class="profile__main-work__content-title">
+                                    University of Gdansk
+                                </p>
+                                <p class="profile__main-work__content-text">Management</p>
+                                <img
+                                        class="profile__main-work__content-textImg"
+                                        alt="dot"
+                                        src="../static/css/images/dot.svg"
+                                />
+                                <p class="profile__main-work__content-text">
+                                    Bachelor’s degree
+                                </p>
+                            </div>
+                        </div>
+                        <div class="profile__main-work__content-right">
+                            <p class="profile__main-work__content-right__text">
+                                Dec 2020 — Dec 2020
+                            </p>
+                        </div>
+                    </div>
+                    <button class="profile__main-workbtn btn">Добавить</button>
+                </div>
+            </div>
+        </div>
+        <div id="reservations" class="tab-content"></div>
+        <div id="messages" class="tab-content"></div>
+    </div>
+</section>
+<footer class="footer">
+    <div class="container">
+        <hr class="line"/>
+        <div class="footer__inner">
+            <ul class="footer__list">
+                <li class="footer__item">
+                    <a href="#" class="footer__item-text">Product Managers</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#" class="footer__item-text">Project Managers</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#" class="footer__item-text">UX/UI Designers</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#" class="footer__item-text">Backend</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#" class="footer__item-text">Frontend</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#" class="footer__item-text">Marketing</a>
+                </li>
+                <li class="footer__item">
+                    <a href="#" class="footer__item-text">QA</a>
+                </li>
+            </ul>
+            <p class="footer__copyright">Copyright 2022 - IT Hunt</p>
+        </div>
+    </div>
+</footer>
+</body>
+<script src="../static/css/js/main.min.js"></script>
+</html>

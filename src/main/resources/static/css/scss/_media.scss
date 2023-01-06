@@ -1,0 +1,250 @@
+@media (max-width: 1400px) {
+  .blockquote {
+    height: 180px;
+  }
+}
+@media (max-width: 1280px) {
+  .cards-content {
+    margin: 92px auto 100px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 100px 100px;
+  }
+}
+@media (max-width: 1240px) {
+  .header__acconut-link {
+    margin-left: 20px;
+  }
+  .header__logo {
+    padding: 40px 59px 40px 58px;
+  }
+}
+@media (max-width: 1150px) {
+  .services__item {
+    padding: 26px 15px;
+  }
+  .services__list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1100px) {
+  .blockquote {
+    height: 140px;
+  }
+  .services__item-link {
+    line-height: 15px;
+    font-size: 20px;
+  }
+}
+@media (max-width: 1020px) {
+  .about__inner {
+    margin-bottom: 30px;
+  }
+  .about__title {
+    font-size: 31px;
+    line-height: 28px;
+  }
+  .about .container {
+    display: flex;
+
+    justify-content: center;
+  }
+}
+@media (max-width: 992px) {
+  .cards-content {
+    gap: 100px 37px;
+  }
+  .footer__list {
+    margin-top: 30px;
+    margin-bottom: 19px;
+  }
+}
+@media (max-width: 868px) {
+  .blockquote {
+    height: 100px;
+  }
+  .services__item-link {
+    line-height: 21px;
+    font-size: 22px;
+  }
+  .services__item {
+    padding: 20px 15px;
+  }
+  .cards-content {
+    margin: 60px auto 100px auto;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 60px;
+  }
+}
+@media (max-width: 728px) {
+  .header__logo {
+    padding: 28px 22px 23px 3px;
+  }
+}
+@media (max-width: 666px) {
+  .footer__list {
+    margin-top: 11px;
+    margin-bottom: 11px;
+  }
+  .footer__item,
+  .footer__copyright {
+    font-size: 13px;
+    line-height: 11px;
+  }
+}
+@media (max-width: 620px) {
+  .search-form__btn {
+    width: 85px;
+  }
+  .blockquote {
+    height: 78px;
+  }
+  .services__item-link {
+    line-height: 16px;
+    font-size: 17px;
+  }
+  .services__item {
+    padding: 12px 15px;
+  }
+  .cards-content {
+    margin: 35px auto 100px;
+    // transform: scale(0.8);
+    gap: 15px;
+  }
+  .card {
+    position: relative;
+    max-width: 251px;
+    max-height: 454px;
+    background: #fbfafa;
+    -webkit-box-shadow: 0px 8px 20px #eae7ea;
+    box-shadow: 0px 8px 20px #eae7ea;
+    border-radius: 18px;
+    .card-top {
+      max-height: 185px;
+    }
+    .card-top__img {
+      border-radius: 18px 18px 0px 0px;
+      max-width: 251px;
+      max-height: 230px;
+      position: relative;
+    }
+    .card-bottom__item {
+      gap: 4px 7px;
+    }
+  }
+  .about__title {
+    margin-top: 30px;
+  }
+}
+@media (max-width: 577px) {
+  .footer__list {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+@media (max-width: 505px) {
+  .cards__inner {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cards .cards-side__title {
+    font-size: 16px;
+    line-height: 23px;
+    position: relative;
+    user-select: none;
+    margin-bottom: 6px;
+    margin-top: 0px;
+  }
+  .cards-side {
+    width: 90% !important;
+  }
+  .cards-side__box {
+    width: 95% !important;
+  }
+  .cards .cards-side__label {
+    color: rgb(116, 116, 115);
+    font-size: 13px;
+    line-height: 14px;
+    user-select: none;
+  }
+  .cards .cards-side__input {
+    margin-right: 16px;
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+    z-index: 10;
+    position: relative;
+  }
+  .cards-side__inner {
+    margin-bottom: 0px !important;
+  }
+  .cards-content__up {
+    top: 17.8%;
+  }
+}
+@media (max-width: 474px) {
+  .header__inner {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .header__logo {
+    order: -1;
+    padding: 28px 22px 23px 30%;
+  }
+  .logo__img {
+    right: 38%;
+    position: absolute;
+    top: 13px;
+  }
+  .header__account {
+    // order: -1;
+    // margin-bottom: 20px;
+    margin-top: 5px;
+  }
+  .search-form__icon {
+    padding: 8px 7px;
+  }
+  .blockquote {
+    display: none;
+  }
+  .services {
+    padding-top: 30px;
+  }
+  .services__item-link {
+    line-height: 14px;
+    font-size: 15px;
+  }
+
+  .services__item {
+    padding: 7px 6px;
+  }
+}
+@media (max-width: 420px) {
+  .logo__img {
+    right: 40%;
+  }
+}
+@media (max-width: 400px) {
+  .logo__img {
+    right: 39%;
+  }
+}
+@media (max-width: 390px) {
+  .logo__img {
+    right: 38%;
+  }
+}
+@media (max-width: 370px) {
+  .logo__img {
+    right: 37%;
+  }
+}
+@media (max-width: 330px) {
+  .logo__img {
+    right: 36%;
+  }
+}

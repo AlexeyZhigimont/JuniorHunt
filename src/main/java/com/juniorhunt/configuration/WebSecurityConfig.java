@@ -36,13 +36,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/", "/home", "/registration", "/login").permitAll()
+                        .antMatchers("/", "/index", "/registration", "/static/**", "/login").permitAll()
                         .anyRequest().authenticated()
                 )
 
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
+                        .defaultSuccessUrl("/junior", true)
                 )
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/")

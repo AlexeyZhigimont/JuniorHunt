@@ -1,17 +1,14 @@
 package com.juniorhunt.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @Entity
 @Table
 public class Position {
@@ -25,4 +22,12 @@ public class Position {
             inverseJoinColumns = @JoinColumn(name = "skill_id"))
     @ToString.Exclude
     private Set<Skill> skills;
+
+    public Position(String position) {
+        this.position = position;
+    }
+
+    public Position() {
+
+    }
 }

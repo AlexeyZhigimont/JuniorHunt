@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document</title>
+  <link
+          href="https://fonts.cdnfonts.com/css/gt-walsheim-pro"
+          rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="../static/css/style.min.css"/>
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <div class="header__inner">
+      <div class="header__logo">
+        <a class="logo__link">
+          <img class="logo__img" src="../static/css/images/logo.svg"/>
+        </a>
+      </div>
+      <div class="header__search">
+        <form class="search-form" action="#">
+          <img class="search-form__icon" src="../static/css/images/search.svg"/>
+          <input
+                  class="search-form__input"
+                  placeholder="Поиск по ключевому слову"
+                  type="text"
+          />
+          <button class="search-form__btn">Искать</button>
+        </form>
+      </div>
+      <div class="header__account">
+        <a class="header__account-link" th:href="@{/login}">
+          <img class="header__account-img" src="../static/css/images/account.png">
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<blockquote class="blockquote"></blockquote>
+<section class="services">
+  <div class="container">
+    <div class="services__inner">
+      <ul class="services__list">
+        <li class="services__item">
+          <a class="services__item-link" href="#">Product Managers</a>
+        </li>
+        <li class="services__item">
+          <a class="services__item-link" href="#">Project Managers</a>
+        </li>
+        <li class="services__item">
+          <a class="services__item-link" href="#">UX/UI Designers</a>
+        </li>
+        <li class="services__item">
+          <a class="services__item-link" href="#">Backend</a>
+        </li>
+        <li class="services__item">
+          <a class="services__item-link" href="#">Frontend</a>
+        </li>
+        <li class="services__item">
+          <a class="services__item-link" href="#">Marketing</a>
+        </li>
+        <li class="services__item">
+          <a class="services__item-link" href="#">QA</a>
+        </li>
+      </ul>
+    </div>
+    <hr class="services__line"/>
+  </div>
+</section>
+<section class="cards">
+  <div class="container">
+    <div class="cards__inner">
+      <aside class="cards-side">
+        <div class="cards-side__box">
+          <h3 class="cards-side__title">Зарплатная вилка</h3>
+          <input type="range" min="0" max="100" step="1" value="50">
+        </div>
+        <div class="cards-side__box">
+          <h3 class="cards-side__title cards-side__title--active">Hard skills</h3>
+        </div>
+        <div class="cards-side__box">
+          <h3 class="cards-side__title">Tools</h3>
+        </div>
+        <div class="cards-side__box">
+          <h3 class="cards-side__title">Soft skills</h3>
+        </div>
+      </aside>
+
+      <div class="cards-content">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="..." alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Название карточки</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Переход куда-нибудь</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="../static/css/js/main.min.js"></script>
+</body>
+</html>

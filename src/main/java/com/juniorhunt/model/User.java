@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -30,7 +31,7 @@ public class User implements UserDetails{
     private String firstName;
     private String lastName;
     private String phone;
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     private String aboutMe;
     private String experience;
     private String courses;
@@ -43,6 +44,7 @@ public class User implements UserDetails{
     @JoinColumn(name = "country_id")
     private Country country;
     @ManyToOne
+    @JoinColumn(name = "position_id")
     private Position position;
     @ManyToMany
     @JoinTable(name = "user_skills",
