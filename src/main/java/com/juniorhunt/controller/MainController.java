@@ -13,11 +13,4 @@ public class MainController {
     public String mainPage(){
         return "hello";
     }
-
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
-
-
 }
