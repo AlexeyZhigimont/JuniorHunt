@@ -16,7 +16,7 @@
     <div class="container">
         <div class="header__inner">
             <div class="header__logo">
-                <a class="logo__link" href="index.html">
+                <a class="logo__link" th:href="@{/}">
                     <img class="logo__img" src="../static/css/images/logo.svg"/>
                 </a>
             </div>
@@ -63,11 +63,20 @@
         <div id="main" class="tab-content main"></div>
         <div id="profile" class="tab-content profile">
             <div class="profile__header">
-                <img
-                        class="profile__header-img"
-                        src="../static/css/images/account.png"
-                        alt="account"
-                />
+                <div th:if="${user.getUrlImgProfile() == null}">
+                    <img
+                            class="profile__header-img"
+                            src="../static/css/images/account.png"
+                            alt="none_photo_profile"
+                    />
+                </div>
+                <div th:if="${user.getUrlImgProfile() != null}">
+                    <img
+                            class="profile__header-img"
+                            th:src="@{'/profile/'+${user?.urlImgProfile}}"
+                            alt="photo_profile"
+                    />
+                </div>
                 <div class="profile__header-info">
                     <h3 class="profile__header-text" th:text="${user?.firstName} +' '+ ${user?.lastName}"/>
                     <table style="text-align: left">
@@ -79,7 +88,7 @@
                         <tr>
                             <td>
                                 <input type="text" style="border: 0" readonly name="country"
-                                       th:value="${user?.country?.getCountry()}" >
+                                       th:value="${user?.country?.getCountry()}">
                             </td>
                             <td>
                                 <input type="text" style="border: 0" readonly name="country" th:value="${user.phone}">
@@ -108,10 +117,13 @@
                         <form method="post" action="/junior/lang">
                             <div>
                                 <select class="profile__main-lang" name="language">
-                                    <option>
-                                        <p class="profile__main-lang" th:text="${user?.getLanguages()?.name()}"></p>
+                                    <option th:if="${user.getLanguages() != null}">
+                                        <p class="profile__main-lang" th:text="${user?.languages?.getName()}"></p>
                                     </option>
-                                    <option th:each="language : ${listLangs}">
+                                    <option th:if="${user.getLanguages() == null}">
+                                        <p class="profile__main-lang" text=""></p>
+                                    </option>
+                                    <option th:each="language : ${listLanguages}">
                                         <p th:text="${language.name}"/>
                                     <option/>
                                 </select>
@@ -123,21 +135,22 @@
                     </li>
                     <li class="profile__main-item">
                         <p class="profile__main-name">Способы связи со мной</p>
-                        <p class="profile__main-social">
-                            <img
-                                    class="profile__main-social__img"
-                                    src="../static/css/images/linkedin.svg"
-                                    alt="linkedin"
-                            />
-                        </p>
-                        <p class="profile__main-social">
-                            <img
-                                    class="profile__main-social__img"
-                                    src="../static/css/images/telegram.svg"
-                                    alt="telegram"
-                            />
-                        </p>
-                        <button class="profile__main-btn btn">Добавить</button>
+                        <div class="profile__main-skillbox">
+                            <a class="profile__main-social" th:href="${user?.getUrlLinkedin()}">
+                                <img
+                                        class="profile__main-social__img"
+                                        src="../static/css/images/linkedin.svg"
+                                        alt="linkedin"
+                                />
+                            </a>
+                            <a class="profile__main-social" th:href="${user.getUrlTelegram()}">
+                                <img
+                                        class="profile__main-social__img"
+                                        src="../static/css/images/telegram.svg"
+                                        alt="telegram"
+                                />
+                            </a>
+                        </div>
                     </li>
                     <li class="profile__main-item">
                         <p class="profile__main-name">Обо мне</p>
@@ -152,6 +165,7 @@
                     <li class="profile__main-item">
                         <p class="profile__main-name">Скилы:</p>
                         <div class="profile__main-box">
+                            <!-- HARD SKILLS VIEW AND FORM -->
                             <div class="profile__main-skillbox">
                                 <p class="profile__main-title">Hard skills</p>
                                 <div th:each="userHardSkill : ${userHardSkills}">
@@ -164,13 +178,13 @@
                                         <input class="profile__main-skill" type="checkbox" th:name="${hardSkill}"
                                                th:text="${hardSkill}" th:checked/>
                                     </div>
-                                    <input type="hidden" name="skill" value="HARD">
+                                    <input type="hidden" name="skills" value="HARD">
                                     <input type="hidden" name="userId" th:value="${user.id}">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                     <button class="profile__main-btn btn">Добавить</button>
                                 </form>
                             </div>
-
+                            <!--------------------------------------- SOFT SKILLS VIEW AND FORM --------------------------------------->
                             <div class="profile__main-skillbox">
                                 <p class="profile__main-title">Soft skills</p>
                                 <div th:each="userSoftSkill : ${userSoftSkills}">
@@ -183,13 +197,13 @@
                                         <input class="profile__main-skill" type="checkbox" th:name="${softSkill}"
                                                th:text="${softSkill}" th:checked/>
                                     </div>
-                                    <input type="hidden" name="skill" value="SOFT">
+                                    <input type="hidden" name="skills" value="SOFT">
                                     <input type="hidden" name="userId" th:value="${user.id}">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                     <button class="profile__main-btn btn">Добавить</button>
                                 </form>
                             </div>
-
+                            <!-- TOOL SKILLS VIEW AND FORM -->
                             <div class="profile__main-skillbox">
                                 <p class="profile__main-title">Tools</p>
                                 <div th:each="userToolSkill : ${userToolSkills}">
@@ -202,7 +216,7 @@
                                         <input class="profile__main-skill" type="checkbox" th:name="${toolSkill}"
                                                th:text="${toolSkill}" th:checked/>
                                     </div>
-                                    <input type="hidden" name="skill" value="TOOL">
+                                    <input type="hidden" name="skills" value="TOOL">
                                     <input type="hidden" name="userId" th:value="${user.id}">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                     <button class="profile__main-btn btn">Добавить</button>
@@ -213,65 +227,73 @@
                 </ul>
                 <div class="profile__main-work">
                     <h4 class="profile__main-work__title">Work Experience</h4>
-                    <div class="profile__main-work__content">
-                        <div class="profile__main-work__content-left">
-                            <img
-                                    src="../static/css/images/workPic.png"
-                                    alt="workpic"
-                                    class="profile__main-work__content-img"
-                            />
-                            <div class="profile__main-work__content-box">
-                                <p class="profile__main-work__content-title">
-                                    IT Recruiter
-                                </p>
-                                <p class="profile__main-work__content-text">StarSoft</p>
+                    <form method="post" action="junior/experience">
+                        <div class="profile__main-work__content">
+                            <div class="profile__main-work__content-left">
                                 <img
-                                        class="profile__main-work__content-textImg"
-                                        alt="dot"
-                                        src="../static/css/images/dot.svg"
+                                        src="../static/css/images/workPic.png"
+                                        alt="workpic"
+                                        class="profile__main-work__content-img"
                                 />
-                                <p class="profile__main-work__content-text">Full-time</p>
+                                <div class="profile__main-work__content-box">
+                                        <textarea class="profile__main-work__content-title" type="textarea"
+                                                  name="experience" th:text="${user.experience}"></textarea>
+                                    <p class="profile__main-work__content-text">StarSoft</p>
+                                    <img
+                                            class="profile__main-work__content-textImg"
+                                            alt="dot"
+                                            src="../static/css/images/dot.svg"
+                                    />
+                                    <p class="profile__main-work__content-text">Full-time</p>
+                                </div>
+                            </div>
+                            <div class="profile__main-work__content-right">
+                                <p class="profile__main-work__content-right__text">
+                                    Dec 2020 — Present
+                                </p>
                             </div>
                         </div>
-                        <div class="profile__main-work__content-right">
-                            <p class="profile__main-work__content-right__text">
-                                Dec 2020 — Present
-                            </p>
-                        </div>
-                    </div>
-                    <button class="profile__main-workbtn btn">Добавить</button>
+                        <input type="hidden" name="experience" value="experience">
+                        <input type="hidden" name="userId" th:value="${user.id}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button class="profile__main-workbtn btn">Добавить</button>
+                    </form>
                 </div>
                 <div class="profile__main-work">
                     <h4 class="profile__main-work__title">Education</h4>
-                    <div class="profile__main-work__content">
-                        <div class="profile__main-work__content-left">
-                            <img
-                                    src="../static/css/images/workPic.png"
-                                    alt="workpic"
-                                    class="profile__main-work__content-img"
-                            />
-                            <div class="profile__main-work__content-box">
-                                <p class="profile__main-work__content-title">
-                                    University of Gdansk
-                                </p>
-                                <p class="profile__main-work__content-text">Management</p>
+                    <form method="post" action="junior/courses">
+                        <div class="profile__main-work__content">
+                            <div class="profile__main-work__content-left">
                                 <img
-                                        class="profile__main-work__content-textImg"
-                                        alt="dot"
-                                        src="../static/css/images/dot.svg"
+                                        src="../static/css/images/workPic.png"
+                                        alt="workpic"
+                                        class="profile__main-work__content-img"
                                 />
-                                <p class="profile__main-work__content-text">
-                                    Bachelor’s degree
+                                <div class="profile__main-work__content-box">
+                                <textarea class="profile__main-work__content-title" type="textarea"
+                                          name="courses" th:text="${user.courses}"></textarea>
+                                    <p class="profile__main-work__content-text">Management</p>
+                                    <img
+                                            class="profile__main-work__content-textImg"
+                                            alt="dot"
+                                            src="../static/css/images/dot.svg"
+                                    />
+                                    <p class="profile__main-work__content-text">
+                                        Bachelor’s degree
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="profile__main-work__content-right">
+                                <p class="profile__main-work__content-right__text">
+                                    Dec 2020 — Dec 2020
                                 </p>
                             </div>
                         </div>
-                        <div class="profile__main-work__content-right">
-                            <p class="profile__main-work__content-right__text">
-                                Dec 2020 — Dec 2020
-                            </p>
-                        </div>
-                    </div>
-                    <button class="profile__main-workbtn btn">Добавить</button>
+                        <input type="hidden" name="courses" value="courses">
+                        <input type="hidden" name="userId" th:value="${user.id}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button class="profile__main-workbtn btn">Добавить</button>
+                    </form>
                 </div>
             </div>
         </div>

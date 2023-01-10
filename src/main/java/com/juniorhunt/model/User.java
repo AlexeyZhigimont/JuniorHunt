@@ -20,7 +20,7 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "user")
-public class User implements UserDetails{
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +35,13 @@ public class User implements UserDetails{
     private String aboutMe;
     private String experience;
     private String courses;
+//    @ElementCollection(targetClass = Language.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "user_lang", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
+//    private Set<Language> languages;
     private Language languages;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
@@ -48,10 +50,12 @@ public class User implements UserDetails{
     private Position position;
     @ManyToMany
     @JoinTable(name = "user_skills",
-                joinColumns = @JoinColumn(name = "user_id"),
-                inverseJoinColumns = @JoinColumn(name = "skill_id"))
-    @ToString.Exclude
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private Set<Skill> skills;
+    private String urlImgProfile;
+    private String urlTelegram;
+    private String urlLinkedin;
     private boolean isActive;
 
     @Override

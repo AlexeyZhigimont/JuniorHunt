@@ -8,12 +8,14 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
-@Table
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private String position;
     @ManyToMany
@@ -27,7 +29,4 @@ public class Position {
         this.position = position;
     }
 
-    public Position() {
-
-    }
 }
